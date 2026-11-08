@@ -1,0 +1,219 @@
+1 - Basics:
+___________
+	1 - Data Types:
+		- int		=> 101
+		- double	=> 1.5
+		- String	=> 'S5' , "S5" => no char type available just String
+		- bool		=> True/false
+		- List		=> [1,2,3,4]   => at Dart , List === Array: List<String> abs = ["a", "b", "c"]
+		- Map		=> { 'name':'Ahmed', 'age':17 }
+	  - Ex:
+		void main(){
+			String name = 'Ahmed';
+			int age = 17;
+			double GPA = 4;
+		}
+	  - Documentation URL:
+		https://dart.dev/language/variables
+	
+	2 - Operators:
+	   - Documentation URL:
+		 https://dart.dev/language/operators
+
+	3 - Controlling the flow
+	   - if(){}
+	4 - Loops:
+	   - while loop:
+		- ex: 
+			void main(){
+				var 1 = 0;    // var : if i don't know what is the type at the right hand side(RHS, what is after = sign) or i am lazy enough to type the type, we use var key word
+				while(i < 5){
+					print(i);
+					i++;
+				}
+			}
+	   - Do While loop:
+		- ex:
+			void main(){
+				var i = 0;
+				do{
+					print(i);
+				} while(i != 0);
+			}
+	   - For loop:
+		- ex:
+			import 'dart:io';
+			void main(){
+				for(int i= 0 ; i < 5; i++){
+					stdout.write(i);
+				}
+			}
+	   - break key word:
+		- ex:
+			import 'dart:io';
+			void main(){
+				for(int i= 0 ; i < 5; i++){
+					if(i == 3){
+						break;
+					}
+					stdout.write(i);
+				}
+			}
+	    - continue key word:
+		- ex:
+			import 'dart:io';
+			void main(){
+				for(int i= 0 ; i < 5; i++){
+					if(i == 3){
+						continue;
+					}
+					stdout.write(i);
+				}
+			}
+
+	5 - Functions:
+		(Return Type) (Function Name) ((parameter type) (parameter name)){
+			// function body
+		}
+		ex:
+			String toString(String className){
+				return "Welcome $className"; // $classname: what will be passed at argument classname , will print here
+			}
+		- return type: either void(no return here) or (any data type like: int, bool, double,) (must return here)
+		- there is a nesting function
+		- ex:	
+			void main(){
+				int sum(int num1, int num2){
+					return num1 + num2;
+				}
+				int total = sum(10,15);
+				print(total);
+			}
+		- Documentation URL:
+			https://docs.bongthorn.dev/pl/learn-dart-first-step-to-flutter/exploring-funtions/defining-a-function
+			https://dart.dev/language/functions
+			https://www.tutorialspoint.com/dart_programming/dart_programming_functions.htm
+
+	6 - Arrays:
+		- at dart List<T> ,is the key syntax of array : ex: List<String> names = ["ahmed", "Toba"];
+		- consist of:
+			- Items  => what is values stored at the array
+			- Length => the array items count
+			- Index  => the position of the element in the array
+		- initialize array
+			- ex:
+				import 'dart:io';
+				void main(){
+					List<String> arr = ['a', 'b', 'c', 'd'];
+					print(arr);
+					// how to display all items inside the array , one bye one
+					for(int i = 0; i < arr.length; i++){
+						stdout.write('${arr[i]}'); // a b c d
+					}
+				}
+		- some commonly used methods at array:
+			- add()			=> to add new item at the last position at the array
+			- remove(object)	=> to delete the current item at the list
+			- addAll(List)		=> to add more that one item at once at the list
+			- ex:
+				void main(){
+					List arr = ['a', 'b', 'c'];
+					print(arr);
+					arr.add('d');
+					print(arr);
+					arr.remove('a');
+					print(arr);
+					arr.addAll(['e', 'f']);
+					print(arr);
+				}
+
+		- Documentation URL:
+			https://www.educative.io/answers/how-to-create-an-array-in-dart
+			https://api.dart.dev/stable/3.0.7/dart-core/List-class.html
+
+__________________________________________________________________________________________________________________
+
+OOP 1
+______
+
+ 01 Classes:	
+	- are the blueprint of the object
+	- logically , object come first, then came the class to represent the object
+	- class , when be create , a new datatype added to the project, with it's attributes(variables) and behavior(methods)
+	- it must be at singular , because it's represent a entity , or a single purpose you made for
+	- ex: Student Class , must contain all related topics for the student
+	- define the class:
+		ex:
+			class Student{
+
+		}
+	- Documentation URL:
+		https://www.tutorialspoint.com/dart_programming/dart_programming_classes.htm
+
+ 02 Constructors:
+	- kinds:
+		- default
+		- Primary
+		- Named constructors
+	- it's a special function, with no data type
+	- by default dart make none parameterize constructor, if i declare that constructor it's become a primary one, and there is only one primary constructor
+	- class Student {
+		// default / primary
+		Student(){
+
+		}
+
+		// named constructor
+		Student.init(String arg1, int arg2){
+
+		}
+	}
+
+ 03 Class Object
+	- ex: 	
+		Student std01 = Student();
+		Student std02 = Student.init('aa', 2);
+
+ 04 Class members
+	- attributes ( variables )
+	- behavior   ( Methods   ) 
+	- ex:
+		class Student{
+			// attributes
+			String name;
+			List<double> grades;
+
+			// methods
+			void showInfo(){
+				print("$name, his grades: $grades[0]");
+			}
+		}
+
+ 05 Encapsulation
+	- restricting the direct access to some components of an object
+	- like : make the variables of the class private, and create a setter function to assign value to it, and getter function to display the value from it
+	-(Access Modifer: private) private variables: the class variables put as private , so the scope of it it the class it self,
+		cannot access from outside the class
+	- to make a variable private : put (_) underscore before it, like: _className = 'S5';
+	- setter : special method to write at the private variable 		=> set
+	- getter : special method to get the value from the private variable	=> get
+	- ex:
+		class Student(){
+			// private attribute
+			String _name;
+
+			// setter
+			set setName(String studentName){
+				_name = studentName;
+			}
+
+			// getter
+			String get getName{
+				return _name;
+			}
+		}
+
+	 - Resource URL:
+			https://www.woolha.com/tutorials/dart-using-access-modifiers-private-public
+			https://www.geeksforgeeks.org/getter-and-setter-methods-in-dart
+		

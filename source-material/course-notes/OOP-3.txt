@@ -1,0 +1,81 @@
+Polymorphism:
+_________________
+
+ - if no inheritance , no polymorphism occur
+ - it a pointer from parent , point to class object
+ - parent hold the child , not visa versa , ex: Accountant acc1 = Employee(); // error , not accepted
+ - ex: 
+	class Employee{
+		void view(){
+			print("parent");
+		}
+	} 					// parent
+	class Developer extends Employee{
+		@override
+		void view(){
+			print("Developer");
+		}
+	} 					// child
+	class Accountant extends Employee{
+		@override
+		void view(){
+			print("Accountant");
+		}
+	} 					// child
+
+	void main(){
+		Employee emp1 = new Employee();
+		emp1.view(); => scope/content => Employee, called view at Employee class
+		//هيبص على الى بعد علامة يساوى ويشوف بينادى على انهى نسخه فى المثال هنا كان بينادى على نفسه كأب
+
+		Employee emp2 = Developer();
+		emp2.view(); 	=> what will be showen here is, what is inside the Employee class
+			 	=> execute view(), will point after = sign , so will implement view function at Developer class if exist, else excute the view function at Employee class
+	}
+  - ex2:
+	- try/catch block
+	void main(){
+		stdout.write("please, insert a number");
+		//int num = int.parse(stdin.readLineSync()!));  // if the user type a charecter , the program will halt
+		// to save the app from craching , we will use try/catch block
+		try{
+			int num = int.parse(stdin.readLineSync()!)); 
+		} on FormatException catc(e){
+			print("Formate error type a number only");	
+		}catch(e){
+			print(e);
+		}
+	}
+______________________________________________________________________________________________________________
+
+Abstract (Method & Class)
+_________________________
+
+ - if i want to create shap/ container or logic for motor
+ - and i has class vichale that will be a parent class for : Car and plane
+ - so, motor function will be differ in both classes as implemenetation
+	ex : 
+		//class Vichale{
+			// void Motor(){
+			  /// so , are there is a need for the motot functoin body here
+			  /// answer, No, so we will make this function as abstract => that the child must put a bodu for it when inherit from the vichale
+			 /// and to do so, the class must be abstract also 
+			//}
+		//}
+		abstract class Vichale{
+			abstract void Motor();
+		}
+		class Car extends Vichale{
+			
+			@override
+			Motor(){
+				print("Car Motor");
+			}
+		}
+		class Plane extends Vichale{
+			
+			@override
+			Motor(){
+				print("Plane Motor");
+			}
+		}

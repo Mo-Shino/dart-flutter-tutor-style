@@ -1,0 +1,202 @@
+2/3 - Optional parameter type
+___________________________
+
+ - overload at dart ????!
+ - remember there is one primary constructor, so not accept to be more than one constructor with the same name
+ - so for sure there is no Overload at Dart
+ -  ex:
+	int add(int num1, int num2){
+		return num1 + num2;
+	}
+	int add(int num1, int num2, int num3){   // error , there are function with the same name
+		return num1 +num2 +num3;
+	}
+	
+	void main(){
+		add(1,2);
+	}
+ - here we used Positional parameter
+ *** Dart solve this , by a way like overload, by optional parameter
+ 	- Parameters Types:
+		1 - Positional Parameters
+		2 - Optional Parameters
+			1 - Optional Positional Parameters []
+			2 - Optional Named Parameters 	   {}
+ - because of , there is no Overload at dart, it invented a way to go with that:
+	- 1 - Optional Positional Parameters 
+	- 2 - Optional Named Parameters
+ ** 1 - Optional Positional Parameters: it's symbol => []
+	ex:
+		//we will do the same example of Add Function
+		int add(int num1, int num2, [int num3 = 0]){
+			return num1 + num2 + num3;
+			// so we declare it , with additional [], for the third parameter which is optional and has a default value in case the user did not give it any value
+			// notice: it's positional , so Order matter ترتيب المتغيرات الافتراضية سيتم الاخذ به في الاعتبار
+		}
+		
+		void main(){
+			print(Add(1,2));   // 3
+			print(Add(1,2,3)); // 6
+			// it's act like overloading :>
+		}
+
+	  ex2: 
+		int Add(int num1, int num2, [int num3 = 10, int num4 = 0]){
+			return num1 + num2 + num3 + num4;
+		}
+
+		void main(){
+			print(Add(1,2)); // see here we just add the first overload, it will print 13 , (1 + 2 + 10 + 0)
+			print(Add(1,2,3));  // 6, because num3 has new value of 3
+			print(Add(1,2,3,4)) // 10, because of (1 + 2 + 3 + 4)
+		}
+
+  ** 2 - Optional Named Parameters:
+	- here it's where the dart magic happen
+	- ex:
+		int Add(int num1; int num2, {int num3 = 0, int num4 = 0}){
+			return num1 + num2 + num3 + num4;
+		} 
+
+		void main(){
+			print(Add(1,2,num4:10,num3:5)); // correct: 18
+			print(5,10, num4:15)); 		// 30
+			// so the Named Parameter solve some issue, and flutter depend on it:
+			// 1 - we can just call the parameter i need , without write the others
+			// 2 - the order not matter
+			// 3 - enhance the readability
+		}
+	- ex2:
+		int Add({int num1 = 0, int num2 = 0, int num3 = 0, int num4 = 0}){
+			return num1 + num2 + num3 + num4;
+		}
+
+		void main(){
+			print(Add(num4:10));			 // 0 + 0 + 0 + 10 = 10
+			print(Add(num2:5, num4:15)); 		 // 0 + 5 + 0 + 15 = 20
+			print(Add(num1:5, num2:10, num3: 15));   // 5 + 10 + 15 + 0 = 30 
+		}
+___________________________________________________________________________________
+
+05 - Optional Named Parameters - Usages 1:
+__________________________________________
+
+ - we can create Constructor with Optional Named Parameters, which create Constructor Overload
+ - ex :
+	class Student{
+		int? ID;
+		int? Age;
+		String? Name;
+		String? Address;
+
+		Student({this.ID = 1, this.Age = 35, this.Name = "test", this.Address = "KSA"});
+	}
+ - if i want to mix: optional named and mandatory to make user give that optional named parameter a value
+	ex:
+		class Student{
+			int? ID;
+			String? Name;
+
+			Student({required this.ID, Name = "user"}); // here ID must be getting value from user, so no need to get a default value
+
+		}
+ - so Optional Parameters:
+	1 - nullable            => ex: int ID?; 	Student({this.ID});
+	2 - default Value       => ex: int ID;		Student({this.ID=0});
+	3 - required		=> ex: int? ID;		Student({required this.ID});
+____________________________________________________________________________________________
+
+06/07 OOP Principles
+____________________
+
+	1 - Encapsulation
+	2 - Inheritance
+	3 - Polymorphism
+	4 - Abstraction
+
+
+	1 - Inheritance:
+	- some common attributes and methods repeated at different classes
+	- we gather all those common Attributes and methods at Parent Class
+	- and make all other classes inherit from it those features
+	- the relation : IS A
+	- we ask our self : 	Employee IS A Person 	=> Correct, so inheritance accepted
+			    	Student  IS A Person    => Correct, so inheritance accepted
+				Car 	 IS A Person    => in-Correct, So no inheritance here
+	- all Attributes and methods is inherited, except for Constructor , not inherited
+	- the child class, must implement/call it's parent Constructor first inside it
+	- differ between:
+			- this  => pointer to every thing inside the class
+			- super => pointer to every thing inside parent class from his child( child class , use it to access any thing at it's parent class)
+	- syntax used to do the inheritance: extends (like java) 
+	- ex:
+		class Person{
+			int? ID;
+			String? Name
+
+			Person({required this.ID, this.Name = "name"}){
+				print("Parent Constructor");
+			}
+
+			void display(){
+				print("ID: $ID, Name: $Name");
+			}
+		}
+		
+		class Student extends Person{
+			String? Marks;
+			// here error will raise , we must provide parent constructor with the required parametars
+			// this is the default way, but there is a simple way
+			//Person(this.Marks, int ID, String Name}):super(ID, Name){
+			//	print("Student Constructor");
+			//}
+
+			// the simple way, we can call the super attribute direct like that
+			Person(this.Marks, super.ID, super.Name){
+				print("Student Constructor");
+			}
+		}
+		
+	- so the golden rule: when take object from child: the parent constructor called first, then the child constructor
+	- ** override: **
+		- occurred at inheritance
+		- for methods
+		- if the parent class had display function, and i want to use the same function at child class and put another implementation for it
+		- syntax: @override => it's annotation for compiler not effect the programming, till it override that function from parent class
+		- the golden rule: the most periorty is implement the function inside the class that is object came from
+		- ex : Student std1 = Student(1, "ahmed", 100); // here will call the display at child first ,then go to the display function at the parent, if i used super.display() at it, then back to the display function at the child 
+		- ex:
+			class Person{
+			int? ID;
+			String? Name
+
+			Person({required this.ID, this.Name = "name"}){
+				print("Parent Constructor");
+			}
+
+			void display(){
+				print("ID: $ID, Name: $Name");
+			}
+		}
+		
+		class Student extends Person{
+			String? Marks;
+			// here error will raise , we must provide parent constructor with the required parameters
+			// this is the default way, but there is a simple way
+			//Person(this.Marks,int ID, String Name}):super(ID, Name){
+			//	print("Student Constructor");
+			//}
+
+			// the simple way, we can call the super attribute direct like that
+			Person(this.Marks, super.ID, super.Name){
+				print("Student Constructor");
+			}
+
+			// override
+			@override
+			void display(){
+				super.display(); // here : ID: $ID, Name: $Name , will printed
+				print("Marks: $marks");
+			}
+		}	  
+		   
